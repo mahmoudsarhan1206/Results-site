@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title> Afm29نتيجة الكلية</title>
+
+<style>
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+padding-top:100px;
+}
+
+input{
+padding:10px;
+font-size:18px;
+border-radius:8px;
+border:none;
+width:250px;
+}
+
+button{
+padding:10px 20px;
+font-size:18px;
+border-radius:8px;
+border:none;
+background:#22c55e;
+color:white;
+cursor:pointer;
+}
+
+#result{
+margin-top:30px;
+font-size:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>استعلام النتيجة</h1>
+
+<input id="seat" placeholder="ادخل رقم الجلوس">
+<br><br>
+<button onclick="getResult()">عرض النتيجة</button>
+
+<div id="result"></div>
+
+<script>
+async function getResult(){
+
+let seat=document.getElementById("seat").value;
+
+document.getElementById("result").innerText="جاري البحث...";
+
+try{
+
+let res=await fetch("/api/result?seat="+seat);
+let data=await res.json();
+
+if(data.success){
+document.getElementById("result").innerText=data.result;
+}else{
+document.getElementById("result").innerText="لم يتم العثور على النتيجة";
+}
+
+}catch(e){
+document.getElementById("result").innerText="حدث خطأ";
+}
+
+}
+</script>
+
+</body>
+</html>
